@@ -66,7 +66,6 @@ Now since I showed the general usage of the function, it is turn for the testing
 2. A non-tibble dataset
 3. An empty dataset
 4. A column with all NA values 
-5. A column that has both NA and non-NA values, this is not an edge case but to see if the function works properly or not
 
 I know 3 and 4 are kind of the same but I would explain the difference as this: if the dataset is only declared but not initiated, it is empty. If the dataset has defined columns but no values or has NA values all across the colum, it is full NA column according to my definition.
 ```{r}

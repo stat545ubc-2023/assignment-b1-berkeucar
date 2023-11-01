@@ -131,8 +131,6 @@ testing. I test the following:
 2.  A non-tibble dataset
 3.  An empty dataset
 4.  A column with all NA values
-5.  A column that has both NA and non-NA values, this is not an edge
-    case but to see if the function works properly or not
 
 I know 3 and 4 are kind of the same but I would explain the difference
 as this: if the dataset is only declared but not initiated, it is empty.
@@ -176,4 +174,4 @@ test_that( "Testing for the function extract_from_column", {
 })
 ```
 
-    ## Test passed 🎉
+    ## Test passed 😀
