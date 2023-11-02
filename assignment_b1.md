@@ -30,6 +30,8 @@ column with `str_extract` method. So, I let the input column to be any
 kind of column as well.
 
 ``` r
+library(tidyverse)
+
 #' Extract patterns from a column
 #' 
 #' @details 
@@ -176,4 +178,4 @@ test_that( "Testing for the function extract_from_column", {
 })
 ```
 
-    ## Test passed 🥳
+    ## Test passed 🎊

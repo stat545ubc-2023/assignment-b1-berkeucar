@@ -19,6 +19,7 @@ One concern that I have is to allow this function to extract as many regular exp
 As a design choice, I let columns that have NA values to be a proper input since they could possess a non NA value as well. I check this with counting the number of non NA values and checking if the count is equal to 0. Furthermore, it is possible to extract a pattern from a double column with ```str_extract``` method. So, I let the input column to be any kind of column as well. 
 
 ```{r}
+library(tidyverse)
 
 #' Extract patterns from a column
 #' 
