@@ -40,21 +40,23 @@ kind of column as well.
 #' @param ... string(s) that hold(s) the regular expression pattern(s) for the extraction. Since user can specify different patterns for the column, I chose ellipsis for these parameters.
 #'
 #' @return dataset tibble with the addition of resulted columns from the extraction
+#' @example 
+#' extract_from_column(steam_games, recent_reviews, "\\w+ \\w+")
+#' extract_from_column(steam_games, recent_reviews, "\\w+", "\\d+%")
 extract_from_column <- function(dataset, column, ...){
   arguments <- c(...)
   
-  # sanity checks
+  # checks
   if (length(arguments) == 0) stop("Sorry, you did not enter a pattern or patterns.")
   if (!is_tibble(dataset)) stop("Sorry, the dataset you passed is not a tibble, it is: ", class(dataset))
   if (nrow(dataset)==0) stop("Sorry, you entered an empty dataset.")
-  # if (length(select(data, {{column}})) == 0) stop("Sorry, the dataset that you provided does not have a column")
   if (summarise(dataset, n=sum(!is.na({{column}})))[1] == 0) stop("Sorry, you entered a full NA column.")
   
   
   resulted_dataset <- dataset
-  for (i in 1:length(arguments)){
-    name <- paste("added_col_", i,sep="")
-    resulted_dataset <- resulted_dataset %>% mutate( !!name := str_extract(pattern=arguments[i], string={{column}}))
+  for (i in 1:length(arguments)){ # for every input pattern
+    name <- paste("added_col_", i,sep="") # generate the name for the column
+    resulted_dataset <- resulted_dataset %>% mutate( !!name := str_extract(pattern=arguments[i], string={{column}}))  # extract the pattern and put it into corresponding column
   }
   
   return(resulted_dataset)
@@ -174,4 +176,4 @@ test_that( "Testing for the function extract_from_column", {
 })
 ```
 
-    ## Test passed 😀
+    ## Test passed 🥳
