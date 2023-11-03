@@ -7,16 +7,17 @@ output: github_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-library(tidyverse)
 ```
-
 # Assignment B-1: Making a function
 
-In the mini data analysis project of STAT545A, I used a lot of string extraction tasks. For this assignment, I thought it would be fun and useful to gather those steps to a function. This is important since those kind of tasks (string extraction from a dataset) is a common practice in data science. 
+*Caution:* If you do not have tidyverse, datateachr, and testthat packages installed please run `install.packages(package_name)` to be able to reproduce the following code. It is not good practice to keep `install.packages` in the source code, so I do not include them in a separate code block.
 
-One concern that I have is to allow this function to extract as many regular expression as possible from a single column, which is both flexible for the extraction and sturdy since extractions are done column by column generally with their specific extraction patterns. Since I do not perform the extraction for lots of columns, I believe this function is not too generalized (i.e. atomic to the column). The function adds a new column to the extracted patterns named <column_name>_<the_number_of_the_argument>. Since this function only requires a single column to be a string column, the function is not restrictive. 
+In the mini data analysis project of STAT545A, I used a lot of string extraction tasks. For this assignment, I thought it would be fun and useful to gather those steps in a function. This is important since those kind of tasks (string extraction from a dataset) is a common practice in data science. 
 
-As a design choice, I let columns that have NA values to be a proper input since they could possess a non NA value as well. I check this with counting the number of non NA values and checking if the count is equal to 0. Furthermore, it is possible to extract a pattern from a double column with ```str_extract``` method. So, I let the input column to be any kind of column as well. 
+One concern that I have is to allow this function to extract as many regular expression as possible from a single column, which is both flexible and sturdy for the extraction since extractions are done column by column generally with their specific extraction patterns. Since I do not perform the extraction for lots of columns, I believe this function is not too generalized. The function adds a new column to the extracted patterns named <column_name>_<the_number_of_the_argument>. Since this function only requires a single column to be a string column, the function is not restrictive. 
+
+As a design choice, I let columns that have NA values to be a proper input since they could possess a non-NA value as well. I check this with counting the number of non NA values and checking if the count is equal to 0. Furthermore, it is possible to extract a pattern from a double column with `str_extract` method. So, I let the input column to be any kind of column as well. 
+
 
 ```{r}
 library(tidyverse)
@@ -63,7 +64,7 @@ print(extract_from_column(building_permits, address, "BC .*") %>% select(address
 print(extract_from_column(steam_games, original_price, "\\d+\\.")%>%select(original_price, added_col_1)) # extraction of the decimal part of a double column, I only show the extracted column and the resource column here for the sake of the reader. !!! For this method since 0 is 0 in double as well, it cannot find the . hence it cannot extract the pattern
 print(extract_from_column(steam_games, all_reviews, "\\(.*\\)", "\\d+%")%>%select(all_reviews, added_col_1, added_col_2)) # extraction of the multiple parts of a string column, I only show the extracted columns and the resource column here for the sake of the reader.
 ```
-Now since I showed the general usage of the function, it is turn for the testing and edge case checking. The following cells demonstrate the testing. I test the following:
+Now, since I showed the general usage of the function, it is turn for the testing and edge case checking. The following cells demonstrate the testing. I test the following:
 
 1. Without any patterns
 2. A non-tibble dataset

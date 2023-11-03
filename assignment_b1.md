@@ -5,25 +5,30 @@ Berke Ucar
 
 # Assignment B-1: Making a function
 
+*Caution:* If you do not have tidyverse, datateachr, and testthat
+packages installed please run `install.packages(package_name)` to be
+able to reproduce the following code. It is not good practice to keep
+`install.packages` in the source code, so I do not include them in a
+separate code block.
+
 In the mini data analysis project of STAT545A, I used a lot of string
 extraction tasks. For this assignment, I thought it would be fun and
-useful to gather those steps to a function. This is important since
+useful to gather those steps in a function. This is important since
 those kind of tasks (string extraction from a dataset) is a common
 practice in data science.
 
 One concern that I have is to allow this function to extract as many
 regular expression as possible from a single column, which is both
-flexible for the extraction and sturdy since extractions are done column
+flexible and sturdy for the extraction since extractions are done column
 by column generally with their specific extraction patterns. Since I do
 not perform the extraction for lots of columns, I believe this function
-is not too generalized (i.e. atomic to the column). The function adds a
-new column to the extracted patterns named
-<column_name>\_<the_number_of_the_argument>. Since this function only
-requires a single column to be a string column, the function is not
-restrictive.
+is not too generalized. The function adds a new column to the extracted
+patterns named <column_name>\_<the_number_of_the_argument>. Since this
+function only requires a single column to be a string column, the
+function is not restrictive.
 
 As a design choice, I let columns that have NA values to be a proper
-input since they could possess a non NA value as well. I check this with
+input since they could possess a non-NA value as well. I check this with
 counting the number of non NA values and checking if the count is equal
 to 0. Furthermore, it is possible to extract a pattern from a double
 column with `str_extract` method. So, I let the input column to be any
@@ -31,7 +36,20 @@ kind of column as well.
 
 ``` r
 library(tidyverse)
+```
 
+    ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+    ## ✔ dplyr     1.1.3     ✔ readr     2.1.4
+    ## ✔ forcats   1.0.0     ✔ stringr   1.5.0
+    ## ✔ ggplot2   3.4.3     ✔ tibble    3.2.1
+    ## ✔ lubridate 1.9.2     ✔ tidyr     1.3.0
+    ## ✔ purrr     1.0.2     
+    ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+    ## ✖ dplyr::filter() masks stats::filter()
+    ## ✖ dplyr::lag()    masks stats::lag()
+    ## ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+
+``` r
 #' Extract patterns from a column
 #' 
 #' @details 
@@ -127,8 +145,8 @@ print(extract_from_column(steam_games, all_reviews, "\\(.*\\)", "\\d+%")%>%selec
     ## 10 Mixed,(904),- 44% of the 904 user reviews for this g… (904)       44%        
     ## # ℹ 40,823 more rows
 
-Now since I showed the general usage of the function, it is turn for the
-testing and edge case checking. The following cells demonstrate the
+Now, since I showed the general usage of the function, it is turn for
+the testing and edge case checking. The following cells demonstrate the
 testing. I test the following:
 
 1.  Without any patterns
@@ -178,4 +196,4 @@ test_that( "Testing for the function extract_from_column", {
 })
 ```
 
-    ## Test passed 🎊
+    ## Test passed 😸
